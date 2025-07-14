@@ -28,7 +28,7 @@ class visionCone:
         self.cone_pos = [pos]
         start_angle = math.radians(self.direction - self.angle_span // 2)
         end_angle = math.radians(self.direction + self.angle_span // 2)
-        num_rays = 60
+        num_rays = 90
 
         for i in range(num_rays + 1):
             angle = start_angle + (end_angle - start_angle) * (i / num_rays)
@@ -146,13 +146,15 @@ while True:
 
     player.tick()
 
+    screen.fill((40, 40, 40))
+    player.vis.render_3d(screen, (player.x, player.y))
+
+
     if map_display:
-        temp_map = map_img.copy()
+        temp_map = map_img.copy().convert_alpha()
+        temp_map.set_alpha(180)
         player.render(temp_map)
         screen.blit(temp_map, (0, 0))
-    else:
-        screen.fill((40, 40, 40))
-        player.vis.render_3d(screen, (player.x, player.y))
 
     pygame.display.flip()
     clock.tick(60)
